@@ -31,8 +31,8 @@ echo "</tomcat-users>" >> /opt/servers/apache-tomcat-8.0.14/conf/tomcat-users.xm
 ln -s /opt/servers/apache-tomcat-8.0.14/bin/catalina.sh /etc/init.d/tomcat
 ln -s /usr/lib/insserv/insserv /sbin/insserv
 cd /etc/init.d
-chkconfig --add /etc/init.d/tomcat
-chkconfig --level 2345 myscript on
+chkconfig --add tomcat
+chkconfig --level 2345 tomcat on
 ./tomcat start
 cd ~
 
