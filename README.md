@@ -25,4 +25,4 @@ A VM fica acessível também via SSH (use o putty, por exemplo).
 Da máquina local é possível acessar os serviços na VM. O mapeamento das portas fica assim:  
 80 na vm -> 180 no host   
 8080 na vm -> 18080 no host  
-27017 na vm -> 37017 no host  
+27017 na vm -> 11011 no host  
