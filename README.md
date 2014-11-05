@@ -19,6 +19,7 @@ Vagrantfile para VM com ambiente para desenvolvimento do sample com AngularJS.
  
 Após subir a VM, você pode realizar o deploy dos projeto a partir de sua IDE.  
 Veja a documentação de cada projeto para verificar como realizar o deploy.  
+A VM fica acessível também via SSH (use o putty, por exemplo).  
 
 ## Portfowarding  
 Da máquina local é possível acessar os serviços na VM. O mapeamento das portas fica assim:  
