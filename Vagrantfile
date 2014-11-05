@@ -5,26 +5,20 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.vm.box = "UNGPDevNG01"
-  config.vm.provision :shell, :inline => "/etc/init.d/networking restart"
+  # All Vagrant configuration is done here. The most common configuration
+  # options are documented and commented below. For a complete reference,
+  # please see the online documentation at vagrantup.com.
+
+  # Every Vagrant virtual environment requires a box to build off of.
+   
+  config.vm.box = "hashicorp/precise32"
   config.vm.provision :shell, path: "bootstrap.sh"
+  config.vm.network :forwarded_port, host: 180, guest: 80
+  config.vm.network :forwarded_port, host: 18080, guest: 8080
+  config.vm.network :forwarded_port, host: 37017, guest: 27017  
   config.ssh.forward_agent = true
   config.ssh.forward_x11 = true
-  config.vm.network :forwarded_port, host: 180, guest: 80
-  config.vm.network :forwarded_port, host: 18080, guest: 8080  
-    
-  config.vm.provider "virtualbox" do |vb|
-    vb.gui = true  
-    vb.customize ["modifyvm", :id, "--memory", "2048"]
-    vb.customize ["modifyvm", :id, "--cpus", "1"]
-    vb.customize ["modifyvm", :id, "--graphicscontroller", "vboxvga"]
-    vb.customize ["modifyvm", :id, "--accelerate3d", "off"]
-    vb.customize ["modifyvm", :id, "--ioapic", "on"]
-    vb.customize ["modifyvm", :id, "--vram", "128"]
-    vb.customize ["modifyvm", :id, "--hwvirtex", "on"]	
-  end
-  
-  
+
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
   # `vagrant box outdated`. This is not recommended.
@@ -53,6 +47,24 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
   # config.vm.synced_folder "../data", "/vagrant_data"
+
+  # Provider-specific configuration so you can fine-tune various
+  # backing providers for Vagrant. These expose provider-specific options.
+  # Example for VirtualBox:
+  #
+  config.vm.provider "virtualbox" do |vb|
+    vb.gui = false
+    vb.customize ["modifyvm", :id, "--memory", "2048"]
+    vb.customize ["modifyvm", :id, "--cpus", "1"]
+    #vb.customize ["modifyvm", :id, "--graphicscontroller", "vboxvga"]
+    #vb.customize ["modifyvm", :id, "--accelerate3d", "off"]
+    #vb.customize ["modifyvm", :id, "--ioapic", "on"]
+    #vb.customize ["modifyvm", :id, "--vram", "128"]
+    #vb.customize ["modifyvm", :id, "--hwvirtex", "on"]
+  end
+  #
+  # View the documentation for the provider you're using for more
+  # information on available options.
 
   # Enable provisioning with CFEngine. CFEngine Community packages are
   # automatically installed. For example, configure the host as a
