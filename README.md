@@ -3,7 +3,7 @@ vagrant
 
 Vagrantfile para VM com ambiente para desenvolvimento do sample com AngularJS.  
 
-## O que vem na VM ##
+## O que tem na VM ##
 - apache 
 - openjdk 7
 - tomcat 8
