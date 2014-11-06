@@ -42,7 +42,7 @@ echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | 
 apt-get update
 apt-get install -y mongodb-org
 service mongod stop
-sed -i \"s/^bind_ip = [^ ]*/bind_ip=0.0.0.0/\" /etc/mongod.conf
+sed -i "s/^bind_ip = [^ ]*/bind_ip=0.0.0.0/" /etc/mongod.conf
 service mongod start
 
 #IntelliJ IDEA
