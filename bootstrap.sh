@@ -6,11 +6,12 @@ apt-get install -y vim
 #Apache
 apt-get install -y apache2
 
-#JDK 7 (Necessario para Jetty 9)
+#JDK 7
 apt-get install -y openjdk-7-jdk
 mkdir /usr/java
 ln -s /usr/lib/jvm/java-7-openjdk-i386 /usr/java/default
 
+#Env variables
 echo "export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-i386" >> ~/.bash_profile
 echo "export CLASSPATH=.:$JAVA_HOME/lib/tools.jar:$JAVA_HOME/lib/dt.jar" >> ~/.bash_profile
 echo "export PATH=$JAVA_HOME/bin:$PATH" >> ~/.bash_profile
@@ -52,7 +53,7 @@ service mongod start
 #tar xfz /tmp/intellij.tar.gz &&
 #cd ~
 
-#Foreman (Heroku local)
+#Foreman (Heroku)
 #wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
 #apt-get install -y maven2
 
@@ -61,4 +62,3 @@ service mongod start
 #apt-get install xfce4
 #apt-get install -y xfce4 virtualbox-guest-dkms virtualbox-guest-utils virtualbox-guest-x11
 #apt-get install -y x11-xkb-utils
-#startxfce4&
