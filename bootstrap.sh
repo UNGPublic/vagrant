@@ -36,20 +36,14 @@ chkconfig --level 2345 tomcat on
 ./tomcat start
 cd ~
 
-#Foreman (Heroku local)
-#wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
-#apt-get install -y maven2
-
 #Mongo
 apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
 echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | sudo tee /etc/apt/sources.list.d/mongodb.list
 apt-get update
 apt-get install -y mongodb-org
-cd /etc/init.d
-chkconfig --add mongod
-chkconfig --level 2345 mongod on
+service mongod stop
+sed -i \"s/^bind_ip = [^ ]*/bind_ip=0.0.0.0/\" /etc/mongod.conf
 service mongod start
-cd ~
 
 #IntelliJ IDEA
 #wget -O /tmp/intellij.tar.gz http://download.jetbrains.com/idea/ideaIU-13.1.5.tar.gz &&
@@ -57,6 +51,10 @@ cd ~
 #cd /opt/ide/intellij
 #tar xfz /tmp/intellij.tar.gz &&
 #cd ~
+
+#Foreman (Heroku local)
+#wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
+#apt-get install -y maven2
 
 #GUI
 #apt-get update
