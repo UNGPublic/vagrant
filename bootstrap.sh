@@ -2,9 +2,12 @@
 apt-get update
 apt-get install -y chkconfig
 apt-get install -y vim
+apt-get install -y unzip 
+apt-get install -y make gcc
 
 #Apache
 apt-get install -y apache2
+apt-get install -y php5 php5-dev git
 
 #JDK 7
 apt-get install -y openjdk-7-jdk
@@ -27,7 +30,9 @@ rm /opt/servers/apache-tomcat-8.0.14/conf/tomcat-users.xml
 echo "<?xml version='1.0' encoding='utf-8'?>" > /opt/servers/apache-tomcat-8.0.14/conf/tomcat-users.xml
 echo "<tomcat-users>" >> /opt/servers/apache-tomcat-8.0.14/conf/tomcat-users.xml
 echo "    <role rolename=\"manager-script\"/>" >> /opt/servers/apache-tomcat-8.0.14/conf/tomcat-users.xml
+echo "    <role rolename=\"manager-gui\"/>" >> /opt/servers/apache-tomcat-8.0.14/conf/tomcat-users.xml
 echo "    <user username=\"admin\" password=\"admin\" roles=\"manager-script\" />" >> /opt/servers/apache-tomcat-8.0.14/conf/tomcat-users.xml
+echo "    <user username=\"tomcat\" password=\"tomcat\" roles=\"manager-gui\" />" >> /opt/servers/apache-tomcat-8.0.14/conf/tomcat-users.xml
 echo "</tomcat-users>" >> /opt/servers/apache-tomcat-8.0.14/conf/tomcat-users.xml
 ln -s /opt/servers/apache-tomcat-8.0.14/bin/catalina.sh /etc/init.d/tomcat
 ln -s /usr/lib/insserv/insserv /sbin/insserv
@@ -37,6 +42,12 @@ chkconfig --level 2345 tomcat on
 ./tomcat start
 cd ~
 
+#Jasig CAS
+wget http://fossies.org/linux/cas-server/modules/cas-server-webapp-4.0.0.war
+wget http://fossies.org/linux/cas-server/modules/cas-management-webapp-4.0.0.war
+mv cas-server-webapp-4.0.0.war /opt/servers/apache-tomcat-8.0.14/webapps/cas.war
+mv cas-management-webapp-4.0.0.war /opt/servers/apache-tomcat-8.0.14/webapps/cas-management.war
+
 #Mongo
 apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
 echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | sudo tee /etc/apt/sources.list.d/mongodb.list
@@ -45,6 +56,21 @@ apt-get install -y mongodb-org
 service mongod stop
 sed -i "s/^bind_ip = [^ ]*/bind_ip=0.0.0.0/" /etc/mongod.conf
 service mongod start
+
+#RockMongo
+git clone https://github.com/mongodb/mongo-php-driver.git
+cd mongo-php-driver/
+phpize
+./configure
+make all
+make install
+cd ..
+rm -rf mongo-php-driver
+echo 'extension=mongo.so' > /etc/php5/apache2/php.ini
+cd /var/www
+git clone https://github.com/iwind/rockmongo.git
+/etc/init.d/apache2 restart 
+
 
 #IntelliJ IDEA
 #wget -O /tmp/intellij.tar.gz http://download.jetbrains.com/idea/ideaIU-13.1.5.tar.gz &&
