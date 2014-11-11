@@ -5,6 +5,12 @@ apt-get install -y vim
 
 #Apache
 apt-get install -y apache2
+service apache2 stop
+cp /etc/apache2/mods-available/proxy.* /etc/apache2/mods-enabled/
+cp /etc/apache2/mods-available/proxy_http.* /etc/apache2/mods-enabled/
+echo "ProxyPass /sample/res http://localhost:8080/sample/res" >> /etc/apache2/httpd.conf
+echo "ProxyPassReverse /sample/res http://localhost:8080/sample/res" >> /etc/apache2/httpd.conf
+service apache2 start
 
 #JDK 7
 apt-get install -y openjdk-7-jdk
@@ -16,6 +22,7 @@ echo "export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-i386" >> ~/.bash_profile
 echo "export CLASSPATH=.:$JAVA_HOME/lib/tools.jar:$JAVA_HOME/lib/dt.jar" >> ~/.bash_profile
 echo "export PATH=$JAVA_HOME/bin:$PATH" >> ~/.bash_profile
 echo "export CATALINA_HOME=/opt/servers/apache-tomcat-8.0.14" >> ~/.bash_profile
+echo "sudo service mongod start" >> ~/.bashrc
 
 #Tomcat
 wget http://mirror.nbtelecom.com.br/apache/tomcat/tomcat-8/v8.0.14/bin/apache-tomcat-8.0.14.tar.gz 
@@ -46,19 +53,6 @@ service mongod stop
 sed -i "s/^bind_ip = [^ ]*/bind_ip=0.0.0.0/" /etc/mongod.conf
 service mongod start
 
-#IntelliJ IDEA
-#wget -O /tmp/intellij.tar.gz http://download.jetbrains.com/idea/ideaIU-13.1.5.tar.gz &&
-#mkdir -p /opt/ide/intellij &&
-#cd /opt/ide/intellij
-#tar xfz /tmp/intellij.tar.gz &&
-#cd ~
-
 #Foreman (Heroku)
 #wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
 #apt-get install -y maven2
-
-#GUI
-#apt-get update
-#apt-get install xfce4
-#apt-get install -y xfce4 virtualbox-guest-dkms virtualbox-guest-utils virtualbox-guest-x11
-#apt-get install -y x11-xkb-utils
