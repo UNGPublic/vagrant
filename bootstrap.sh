@@ -63,20 +63,21 @@ apt-get install -y mongodb-org
 service mongod stop
 sed -i "s/^bind_ip = [^ ]*/bind_ip=0.0.0.0/" /etc/mongod.conf
 service mongod start
+mongoimport --jsonArray --db sampleng --collection logradouros --file /var/www/logradouros_sc.json
 
 #RockMongo
-git clone https://github.com/mongodb/mongo-php-driver.git
-cd mongo-php-driver/
-phpize
-./configure
-make all
-make install
-cd ..
-rm -rf mongo-php-driver
-echo 'extension=mongo.so' > /etc/php5/apache2/php.ini
-cd /var/www
-git clone https://github.com/iwind/rockmongo.git
-/etc/init.d/apache2 restart 
+#git clone https://github.com/mongodb/mongo-php-driver.git
+#cd mongo-php-driver/
+#phpize
+#./configure
+#make all
+#make install
+#cd ..
+#rm -rf mongo-php-driver
+#echo 'extension=mongo.so' > /etc/php5/apache2/php.ini
+#cd /var/www
+#git clone https://github.com/iwind/rockmongo.git
+#/etc/init.d/apache2 restart 
 
 
 #IntelliJ IDEA
