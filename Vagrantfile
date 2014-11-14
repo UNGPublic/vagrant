@@ -15,6 +15,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision :shell, path: "bootstrap.sh"
   config.vm.network :forwarded_port, host: 18000, guest: 80
   config.vm.network :forwarded_port, host: 18080, guest: 8080
+  config.vm.network :forwarded_port, host: 16379, guest: 6379
   config.vm.network :forwarded_port, host: 27017, guest: 27017  
   config.vm.synced_folder "www", "/var/www"
   config.ssh.forward_agent = true

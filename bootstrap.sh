@@ -81,6 +81,9 @@ cd /var/www
 git clone https://github.com/iwind/rockmongo.git
 /etc/init.d/apache2 restart 
 
+# Redis Cache
+apt-get install redis-server
+
 #IntelliJ IDEA
 #wget -O /tmp/intellij.tar.gz http://download.jetbrains.com/idea/ideaIU-13.1.5.tar.gz &&
 #mkdir -p /opt/ide/intellij &&
