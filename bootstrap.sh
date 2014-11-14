@@ -3,7 +3,7 @@ apt-get update
 apt-get install -y chkconfig
 apt-get install -y vim
 apt-get install -y unzip 
-apt-get install -y make gcc
+apt-get install -y make 
 
 #Apache
 apt-get install -y apache2
@@ -12,7 +12,9 @@ service apache2 stop
 cp /etc/apache2/mods-available/proxy.* /etc/apache2/mods-enabled/
 cp /etc/apache2/mods-available/proxy_http.* /etc/apache2/mods-enabled/
 echo "ProxyPass /sample/res http://localhost:8080/sample/res" >> /etc/apache2/httpd.conf
+echo "ProxyPass /cas http://localhost:8080/cas" >> /etc/apache2/httpd.conf
 echo "ProxyPassReverse /sample/res http://localhost:8080/sample/res" >> /etc/apache2/httpd.conf
+echo "ProxyPassReverse /cas http://localhost:8080/cas" >> /etc/apache2/httpd.conf
 service apache2 start
 
 #JDK 7
@@ -28,7 +30,7 @@ echo "export CATALINA_HOME=/opt/servers/apache-tomcat-8.0.14" >> ~/.bash_profile
 echo "sudo service mongod start" >> ~/.bashrc
 
 #Tomcat
-wget http://mirror.nbtelecom.com.br/apache/tomcat/tomcat-8/v8.0.14/bin/apache-tomcat-8.0.14.tar.gz 
+wget http://archive.apache.org/dist/tomcat/tomcat-8/v8.0.14/bin/apache-tomcat-8.0.14.tar.gz
 tar xvzf apache-tomcat-8.0.14.tar.gz
 rm -rf apache-tomcat-8.0.14.tar.gz
 mkdir -p /opt/servers/
@@ -51,9 +53,9 @@ cd ~
 
 #Jasig CAS
 wget http://fossies.org/linux/cas-server/modules/cas-server-webapp-4.0.0.war
-wget http://fossies.org/linux/cas-server/modules/cas-management-webapp-4.0.0.war
 mv cas-server-webapp-4.0.0.war /opt/servers/apache-tomcat-8.0.14/webapps/cas.war
-mv cas-management-webapp-4.0.0.war /opt/servers/apache-tomcat-8.0.14/webapps/cas-management.war
+#wget http://fossies.org/linux/cas-server/modules/cas-management-webapp-4.0.0.war
+#mv cas-management-webapp-4.0.0.war /opt/servers/apache-tomcat-8.0.14/webapps/cas-management.war
 
 #Mongo
 apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
@@ -66,19 +68,18 @@ service mongod start
 mongoimport --jsonArray --db sampleng --collection logradouros --file /var/www/logradouros_sc.json
 
 #RockMongo
-#git clone https://github.com/mongodb/mongo-php-driver.git
-#cd mongo-php-driver/
-#phpize
-#./configure
-#make all
-#make install
-#cd ..
-#rm -rf mongo-php-driver
-#echo 'extension=mongo.so' > /etc/php5/apache2/php.ini
-#cd /var/www
-#git clone https://github.com/iwind/rockmongo.git
-#/etc/init.d/apache2 restart 
-
+git clone https://github.com/mongodb/mongo-php-driver.git
+cd mongo-php-driver/
+phpize
+./configure
+make all
+make install
+cd ..
+rm -rf mongo-php-driver
+echo 'extension=mongo.so' > /etc/php5/apache2/php.ini
+cd /var/www
+git clone https://github.com/iwind/rockmongo.git
+/etc/init.d/apache2 restart 
 
 #IntelliJ IDEA
 #wget -O /tmp/intellij.tar.gz http://download.jetbrains.com/idea/ideaIU-13.1.5.tar.gz &&
