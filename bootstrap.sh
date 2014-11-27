@@ -67,6 +67,27 @@ export JPDA_TRANSPORT=dt_socket
 ./tomcat jpda start
 cd ~
 
+#mod_jk
+apt-get install libapache2-mod-jk
+echo -n > /etc/libapache2-mod-jk/workers.properties
+echo "workers.tomcat_home=/opt/servers/apache-tomcat-8.0.14" >> /etc/libapache2-mod-jk/workers.properties
+echo "workers.java_home=/usr/lib/jvm/java-1.7.0-openjdk-i386" >> /etc/libapache2-mod-jk/workers.properties
+echo "ps=/" >> /etc/libapache2-mod-jk/workers.properties
+echo "worker.list=tcat_backng" >> /etc/libapache2-mod-jk/workers.properties
+echo "worker.tcat_backng.port=8009" >> /etc/libapache2-mod-jk/workers.properties
+echo "worker.tcat_backng.host=localhost" >> /etc/libapache2-mod-jk/workers.properties
+echo "worker.tcat_backng.type=ajp13" >> /etc/libapache2-mod-jk/workers.properties
+echo -n > /etc/libapache2-mod-jk/httpd-jk.conf
+echo "<IfModule jk_module>" >> /etc/libapache2-mod-jk/httpd-jk.conf
+echo "    JkWorkersFile /etc/libapache2-mod-jk/workers.properties" >> /etc/libapache2-mod-jk/httpd-jk.conf
+echo "    JkLogFile /var/log/apache2/mod_jk.log" >> /etc/libapache2-mod-jk/httpd-jk.conf
+echo "    JkLogLevel info" >> /etc/libapache2-mod-jk/httpd-jk.conf
+echo "    JkShmFile /var/log/apache2/jk-runtime-status" >> /etc/libapache2-mod-jk/httpd-jk.conf
+echo "    JkWatchdogInterval 60" >> /etc/libapache2-mod-jk/httpd-jk.conf
+echo "    JkMount /sample/res|/* tcat_backng" >> /etc/libapache2-mod-jk/httpd-jk.conf
+echo "    JkMount /cas|/* tcat_backng" >> /etc/libapache2-mod-jk/httpd-jk.conf
+echo "</IfModule>" >> /etc/libapache2-mod-jk/httpd-jk.conf
+
 #Jasig CAS
 wget http://fossies.org/linux/cas-server/modules/cas-server-webapp-4.0.0.war
 mv cas-server-webapp-4.0.0.war /opt/servers/apache-tomcat-8.0.14/webapps/cas.war
