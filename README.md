@@ -27,7 +27,7 @@ A VM fica acessível também via SSH (use o putty, por exemplo).
 ## Port forwarding  
 Da máquina local é possível acessar os serviços na VM. O mapeamento das portas fica assim:  
 80 na vm -> 18000 no host   
-80 na vm -> 18443 no host   
+443 na vm -> 18443 no host   
 8080 na vm -> 18080 no host  
 27017 na vm -> 27017 no host  
 
