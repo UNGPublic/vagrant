@@ -26,7 +26,7 @@ openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/apache2/ssl/apa
 openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 -subj "/C=BR/ST=SC/L=Florianopolis/O=Softplan/CN=pocng.softplan.com.br" -keyout /etc/apache2/ssl/apache.key  -out /etc/apache2/ssl/apache.crt
 sed -i 's/\/etc\/ssl\/certs\/ssl-cert-snakeoil.pem/\/etc\/apache2\/ssl\/apache.crt/g' /etc/apache2/sites-available/default-ssl
 sed -i 's/\/etc\/ssl\/private\/ssl-cert-snakeoil.key/\/etc\/apache2\/ssl\/apache.key/g' /etc/apache2/sites-available/default-ssl
-a2ensite /etc/apache2/sites-available/default-ssl
+a2ensite default-ssl
 service apache2 restart
 
 #OpenJDK 7
