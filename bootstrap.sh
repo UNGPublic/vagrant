@@ -8,7 +8,7 @@ apt-get install -y vim
 apt-get install -y unzip 
 apt-get install -y make 
 
-#Apache
+#Apache com https
 apt-get install -y apache2
 apt-get install -y php5 php5-dev git
 service apache2 stop
@@ -19,6 +19,15 @@ echo "ProxyPass /cas http://localhost:8080/cas" >> /etc/apache2/httpd.conf
 echo "ProxyPassReverse /sample/res http://localhost:8080/sample/res" >> /etc/apache2/httpd.conf
 echo "ProxyPassReverse /cas http://localhost:8080/cas" >> /etc/apache2/httpd.conf
 service apache2 start
+a2enmod ssl
+service apache2 restart
+mkdir /etc/apache2/ssl
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/apache2/ssl/apache.key -out /etc/apache2/ssl/apache.crt
+openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 -subj "/C=BR/ST=SC/L=Florianopolis/O=Softplan/CN=pocng.softplan.com.br" -keyout /etc/apache2/ssl/apache.key  -out /etc/apache2/ssl/apache.crt
+sed -i 's/\/etc\/ssl\/certs\/ssl-cert-snakeoil.pem/\/etc\/apache2\/ssl\/apache.crt/g' /etc/apache2/sites-available/default-ssl
+sed -i 's/\/etc\/ssl\/private\/ssl-cert-snakeoil.key/\/etc\/apache2\/ssl\/apache.key/g' /etc/apache2/sites-available/default-ssl
+a2ensite /etc/apache2/sites-available/default-ssl
+service apache2 restart
 
 #OpenJDK 7
 apt-get install -y openjdk-7-jdk
