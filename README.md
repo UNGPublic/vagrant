@@ -4,10 +4,13 @@ vagrant
 Vagrantfile para VM com ambiente para desenvolvimento do sample com AngularJS.  
 
 ## O que tem na VM ##
-- apache httpd  
+- apache httpd
 - openjdk 7
 - tomcat 8
 - mongodb (ultima versão do repo)
+- rock mongo (front end)
+- jazig cas 4
+- Redis
 
 ## Instruções de instalação  
 - Instale o VirtualBox
@@ -24,6 +27,7 @@ A VM fica acessível também via SSH (use o putty, por exemplo).
 ## Port forwarding  
 Da máquina local é possível acessar os serviços na VM. O mapeamento das portas fica assim:  
 80 na vm -> 18000 no host   
+80 na vm -> 18443 no host   
 8080 na vm -> 18080 no host  
 27017 na vm -> 27017 no host  
 
