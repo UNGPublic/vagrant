@@ -87,6 +87,8 @@ echo "    JkWatchdogInterval 60" >> /etc/libapache2-mod-jk/httpd-jk.conf
 echo "    JkMount /sample/res|/* tcat_backng" >> /etc/libapache2-mod-jk/httpd-jk.conf
 echo "    JkMount /cas|/* tcat_backng" >> /etc/libapache2-mod-jk/httpd-jk.conf
 echo "</IfModule>" >> /etc/libapache2-mod-jk/httpd-jk.conf
+sed -i '2iJkMountCopy On' /etc/apache2/sites-enabled/000-default
+sed -i '2iJkMountCopy On' /etc/apache2/sites-enabled/default-ssl
 
 #Jasig CAS
 wget http://fossies.org/linux/cas-server/modules/cas-server-webapp-4.0.0.war
