@@ -27,8 +27,8 @@ openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 -subj "/C=BR/ST=SC/L=Fl
 sed -i 's/\/etc\/ssl\/certs\/ssl-cert-snakeoil.pem/\/etc\/apache2\/ssl\/apache.crt/g' /etc/apache2/sites-available/default-ssl
 sed -i 's/\/etc\/ssl\/private\/ssl-cert-snakeoil.key/\/etc\/apache2\/ssl\/apache.key/g' /etc/apache2/sites-available/default-ssl
 a2ensite default-ssl
-sed -i '2iJkMountCopy On' /etc/apache2/sites-enabled/000-default
-sed -i '2iJkMountCopy On' /etc/apache2/sites-enabled/default-ssl
+sed -i '3iJkMountCopy On' /etc/apache2/sites-enabled/000-default
+sed -i '5iJkMountCopy On' /etc/apache2/sites-enabled/default-ssl
 service apache2 restart
 
 #OpenJDK 7
