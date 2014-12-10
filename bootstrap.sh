@@ -95,6 +95,16 @@ sed -i '2iJkMountCopy On' /etc/apache2/sites-enabled/default-ssl
 #Jasig CAS
 wget http://fossies.org/linux/cas-server/modules/cas-server-webapp-4.0.0.war
 mv cas-server-webapp-4.0.0.war /opt/servers/apache-tomcat-8.0.14/webapps/cas.war
+#stopping tomcat
+sh /opt/servers/apache-tomcat-8.0.14/bin/shutdown.sh
+#replace cas-servlet.xml
+rm /opt/servers/apache-tomcat-8.0.14/webapps/cas/WEB-INF/cas-servlet.xml
+cp /vagrant/cas/cas-servlet.xml /opt/servers/apache-tomcat-8.0.14/webapps/cas/WEB-INF/cas-servlet.xml
+#replace ticketExpirationPolices.xml
+rm /opt/servers/apache-tomcat-8.0.14/webapps/cas/WEB-INF/spring-configuration/ticketExpirationPolicies.xml
+cp /vagrant/cas/ticketExpirationPolicies.xml /opt/servers/apache-tomcat-8.0.14/webapps/cas/WEB-INF/spring-configuration/ticketExpirationPolicies.xml
+#starting tomcat
+sh /opt/servers/apache-tomcat-8.0.14/bin/startup.sh
 #wget http://fossies.org/linux/cas-server/modules/cas-management-webapp-4.0.0.war
 #mv cas-management-webapp-4.0.0.war /opt/servers/apache-tomcat-8.0.14/webapps/cas-management.war
 
